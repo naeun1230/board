@@ -93,6 +93,20 @@ router.get('/logout', isLoggedIn, async (req, res, next) => {
 })
 
 //로그인 상태 확인 localhost:8000/auth/status
-router.get('/status', async (req, res, next) => {})
+router.get('/status', async (req, res, next) => {
+   if (req.isAuthenticated()) {
+      res.json({
+         isAuthenticated: true,
+         user: {
+            id: req.user.id,
+            userid: req.user.userid,
+         },
+      })
+   } else {
+      res.json({
+         isAuthenticated: false,
+      })
+   }
+})
 
 module.exports = router

@@ -9,6 +9,7 @@ const cors = require('cors') //cors 미들웨어 -> ★api 서버는 반드시 �
 
 const indexRouter = require('./routes')
 const authRouter = require('./routes/auth')
+const postRouter = require('./routes/post')
 const { sequelize } = require('./models')
 const passportConfig = require('./passport')
 
@@ -55,6 +56,7 @@ app.use(passport.session())
 //라우터 등록
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
+app.use('/post', postRouter)
 
 //잘못된 라우터 경로 처리
 app.use((req, res, next) => {
@@ -67,6 +69,9 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
    const statusCode = err.status || 500 //err.status가 있으면 err.status 저장 없으면 500
    const errorMessage = err.message || '서버 내부 오류'
+
+   //개발 중에 서버 콘솔에서 에러 확인 용도
+   console.log(err)
 
    res.status(statusCode).json({
       success: false,
