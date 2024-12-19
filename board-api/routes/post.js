@@ -111,7 +111,7 @@ router.put('/:id', isLoggedIn, upload.single('img'), async (req, res) => {
             )
          )
 
-         await post.addHashtags(result.map((r) => r[0]))
+         await post.setHashtags(result.map((r) => r[0]))
       }
 
       const updatedPost = await Post.findOne({
